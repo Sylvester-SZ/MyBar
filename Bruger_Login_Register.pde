@@ -13,7 +13,7 @@ ArrayList<Bruger> brugere = new ArrayList<Bruger>();
 
 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-Textfield registrerNavnFelt, registrerPasswordFelt, registrerAlderFelt, registrerPræferencerFelt;
+Textfield registrerNavnFelt, registrerPasswordFelt, registrerAlderFelt, registrerEmailFelt;
 Button registrerKlarKnappen;
 
 Textfield loginNavnFelt, loginPasswordFelt;
@@ -24,23 +24,23 @@ String besked = "";
 
 int brugerIdTæller = 0;
 
-color baggrundsFarve = color(245, 245, 245);
-color knapFarve = color(70, 130, 180);
-color knapHoverFarve = color(100, 149, 237);
+color baggrundsFarve = color(52,1,17);
+color baggrundsFarve2 = color(95,2,31);
+color knapFarve = color(86,2,28);
+color knapHoverFarve = color(188,4,62);
 color tekstFarve = color(50);
 PFont font;
 
 void setup() {
-  size(600, 500);
+  fullScreen();
   kontrolP5 = new ControlP5(this);
-  font = createFont("Arial", 16);
+  font = createFont("Century Gothic", width/80);
   background(baggrundsFarve);
   setupRegistrerUI();
   setupLoginUI();
 }
 
 void draw() {
-  background(baggrundsFarve);
   fill(tekstFarve);
   textFont(font);
   
@@ -48,8 +48,10 @@ void draw() {
   textAlign(CENTER, CENTER);
   
   if (nuværendeTilstand.equals("registrer")) {
+    fill(255);
     text("Opret en Konto", width/2, 30);
   } else if (nuværendeTilstand.equals("login")) {
+    fill(255);
     text("Login", width/2, 30);
   }
   
@@ -60,35 +62,57 @@ void draw() {
 
 void setupRegistrerUI() {
   registrerNavnFelt = kontrolP5.addTextfield("RegistrerNavn")
-    .setPosition(150, 80)
-    .setSize(300, 30)
+    .setPosition(width/2-width/12, height/20*8)
+    .setSize(width/6,height/30)
     .setAutoClear(false)
+    .setFont(font)
     .setLabel("Navn")
-    .setFont(font);
-  
+    .setFocus(false)
+    .setColorActive(baggrundsFarve2) 
+    .setColorForeground(baggrundsFarve2)
+    .setColorBackground(baggrundsFarve2);
+
+  registrerNavnFelt.getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE)
+    .setPadding(width/200, -height/18);
+
   registrerPasswordFelt = kontrolP5.addTextfield("RegistrerPassword")
-    .setPosition(150, 140)
-    .setSize(300, 30)
+    .setPosition(width/2-width/12, height/20*10)
+    .setSize(width/6,height/30)
     .setPasswordMode(true)
     .setLabel("Password")
-    .setFont(font);
-  
+    .setFont(font)
+    .setColorForeground(baggrundsFarve2)
+    .setColorBackground(baggrundsFarve2);
+
+  registrerPasswordFelt.getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE)
+    .setPadding(width/200, -height/18);
+
   registrerAlderFelt = kontrolP5.addTextfield("RegistrerAlder")
-    .setPosition(150, 200)
-    .setSize(300, 30)
+    .setPosition(width/2-width/12, height/20*12)
+    .setSize(width/6,height/30)
     .setInputFilter(ControlP5.INTEGER)
     .setLabel("Alder")
-    .setFont(font);
-  
-  registrerPræferencerFelt = kontrolP5.addTextfield("RegistrerPræferencer")
-    .setPosition(150, 260)
-    .setSize(300, 30)
-    .setLabel("Præferencer (komma adskilt)")
-    .setFont(font);
-  
+    .setFont(font)
+    .setColorForeground(baggrundsFarve2)
+    .setColorBackground(baggrundsFarve2);
+
+  registrerAlderFelt.getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE)
+    .setPadding(width/200, -height/18);
+
+  registrerEmailFelt = kontrolP5.addTextfield("RegistrerEmail")
+    .setPosition(width/2-width/12, height/20*14)
+    .setSize(width/6,height/30)
+    .setLabel("Email")
+    .setFont(font)
+    .setColorForeground(baggrundsFarve2)
+    .setColorBackground(baggrundsFarve2);
+
+  registrerEmailFelt.getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE)
+    .setPadding(width/200, -height/18);
+
   registrerKlarKnappen = kontrolP5.addButton("RegistrerKlar")
-    .setPosition(250, 320)
-    .setSize(100, 40)
+    .setPosition(width/2-width/40, height/20*16)
+    .setSize(width/20,height/30)
     .setLabel("Registrer")
     .setFont(font)
     .setColorBackground(knapFarve)
@@ -100,25 +124,42 @@ void setupRegistrerUI() {
     });
 }
 
-void setupLoginUI() {
-  loginNavnFelt = kontrolP5.addTextfield("LoginNavn")
-    .setPosition(150, 100)
+
+void setupLoginUI() { 
+  fill(255);
+  noStroke();
+  circle(width/2, height/20*4,width/10);
+  fill(baggrundsFarve);
+  circle(width/2, height/20*4+width/22,width/12);
+  circle(width/2, height/20*4-width/60,width/30);
+  
+  loginNavnFelt = kontrolP5.addTextfield("LoginEmail")
+    .setPosition(width/2-150, height/20*10)
     .setSize(300, 30)
     .setAutoClear(false)
-    .setLabel("Navn")
+    .setLabel("Email")
     .setFont(font)
-    .hide();
+    .hide()
+    .setColorBackground(baggrundsFarve2);
+
+  loginNavnFelt.getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE)
+    .setPadding(5, -50);
   
+
   loginPasswordFelt = kontrolP5.addTextfield("LoginPassword")
-    .setPosition(150, 160)
+    .setPosition(width/2-150, height/20*12)
     .setSize(300, 30)
     .setPasswordMode(true)
     .setLabel("Password")
     .setFont(font)
-    .hide();
-  
+    .hide()
+    .setColorBackground(baggrundsFarve2);
+
+  loginPasswordFelt.getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE)
+    .setPadding(5, -50);
+
   loginKnappen = kontrolP5.addButton("LoginKnappen")
-    .setPosition(250, 220)
+    .setPosition(width/2, height/20*14)
     .setSize(100, 40)
     .setLabel("Login")
     .setFont(font)
@@ -130,9 +171,9 @@ void setupLoginUI() {
       }
     })
     .hide();
-  
+
   skiftTilRegistrerKnappen = kontrolP5.addButton("SkiftTilRegistrer")
-    .setPosition(250, 280)
+    .setPosition(width/2, height/20*16)
     .setSize(100, 30)
     .setLabel("Registrer")
     .setFont(font)
@@ -146,19 +187,20 @@ void setupLoginUI() {
     .hide();
 }
 
+
 void registrerBruger() {
   besked = "";
-  
+
   String navn = kontrolP5.get(Textfield.class, "RegistrerNavn").getText().trim();
   String password = kontrolP5.get(Textfield.class, "RegistrerPassword").getText();
   String alderTekst = kontrolP5.get(Textfield.class, "RegistrerAlder").getText().trim();
-  String præferencerTekst = kontrolP5.get(Textfield.class, "RegistrerPræferencer").getText().trim();
-  
-  if (navn.isEmpty() || password.isEmpty() || alderTekst.isEmpty()) {
+  String emailTekst = kontrolP5.get(Textfield.class, "RegistrerEmail").getText().trim();
+
+  if (navn.isEmpty() || password.isEmpty() || alderTekst.isEmpty() || emailTekst.isEmpty()) {
     besked = "Udfyld venligst alle obligatoriske felter.";
     return;
   }
-  
+
   int alder;
   try {
     alder = Integer.parseInt(alderTekst);
@@ -170,25 +212,18 @@ void registrerBruger() {
     besked = "Alder skal være et heltal.";
     return;
   }
-  
+
   for (Bruger bruger : brugere) {
     if (bruger.getNavn().equalsIgnoreCase(navn)) {
       besked = "Bruger med dette navn eksisterer allerede.";
       return;
     }
   }
-  
-  ArrayList<String> præferencer = new ArrayList<String>();
-  if (!præferencerTekst.isEmpty()) {
-    for (String pref : præferencerTekst.split(",")) {
-      præferencer.add(pref.trim());
-    }
-  }
-  
+
   LocalDate nuværendeDato = LocalDate.now();
-  
-  Bruger bruger = new Bruger(navn, brugerIdTæller++, password, nuværendeDato, alder, præferencer);
-  
+
+  Bruger bruger = new Bruger(navn, brugerIdTæller++, password, nuværendeDato, alder, emailTekst);
+
   brugere.add(bruger);
   
   println("Bruger Registreret:");
@@ -196,7 +231,7 @@ void registrerBruger() {
   println("ID: " + bruger.getId());
   println("Dato: " + bruger.getDato());
   println("Alder: " + bruger.getAlder());
-  println("Præferencer: " + bruger.getPræferancer());
+  println("Email: " + bruger.getEmail());
   println("Hashed Password: " + bruger.getHashedPassword());
   println("Salt: " + bytesTilHex(bruger.getSalt()));
   println("-----------------------------------");
@@ -204,7 +239,7 @@ void registrerBruger() {
   kontrolP5.get(Textfield.class, "RegistrerNavn").clear();
   kontrolP5.get(Textfield.class, "RegistrerPassword").clear();
   kontrolP5.get(Textfield.class, "RegistrerAlder").clear();
-  kontrolP5.get(Textfield.class, "RegistrerPræferencer").clear();
+  kontrolP5.get(Textfield.class, "RegistrerEmail").clear();
   
   skiftTilLogin();
   
@@ -212,30 +247,32 @@ void registrerBruger() {
 }
 
 void skiftTilLogin() {
+  background(52,1,17);
   nuværendeTilstand = "login";
   
   kontrolP5.get(Textfield.class, "RegistrerNavn").hide();
   kontrolP5.get(Textfield.class, "RegistrerPassword").hide();
   kontrolP5.get(Textfield.class, "RegistrerAlder").hide();
-  kontrolP5.get(Textfield.class, "RegistrerPræferencer").hide();
+  kontrolP5.get(Textfield.class, "RegistrerEmail").hide();
   kontrolP5.get(Button.class, "RegistrerKlar").hide();
   
-  kontrolP5.get(Textfield.class, "LoginNavn").show();
+  kontrolP5.get(Textfield.class, "LoginEmail").show();
   kontrolP5.get(Textfield.class, "LoginPassword").show();
   kontrolP5.get(Button.class, "LoginKnappen").show();
   kontrolP5.get(Button.class, "SkiftTilRegistrer").show();
 }
 
 void skiftTilRegistrer() {
+  background(52,1,17);
   nuværendeTilstand = "registrer";
   
   kontrolP5.get(Textfield.class, "RegistrerNavn").show();
   kontrolP5.get(Textfield.class, "RegistrerPassword").show();
   kontrolP5.get(Textfield.class, "RegistrerAlder").show();
-  kontrolP5.get(Textfield.class, "RegistrerPræferencer").show();
+  kontrolP5.get(Textfield.class, "RegistrerEmail").show();
   kontrolP5.get(Button.class, "RegistrerKlar").show();
   
-  kontrolP5.get(Textfield.class, "LoginNavn").hide();
+  kontrolP5.get(Textfield.class, "LoginEmail").hide();
   kontrolP5.get(Textfield.class, "LoginPassword").hide();
   kontrolP5.get(Button.class, "LoginKnappen").hide();
   kontrolP5.get(Button.class, "SkiftTilRegistrer").hide();
@@ -246,17 +283,17 @@ void skiftTilRegistrer() {
 void loginBruger() {
   besked = "";
   
-  String navn = kontrolP5.get(Textfield.class, "LoginNavn").getText().trim();
+  String email = kontrolP5.get(Textfield.class, "LoginEmail").getText().trim();
   String password = kontrolP5.get(Textfield.class, "LoginPassword").getText();
   
-  if (navn.isEmpty() || password.isEmpty()) {
-    besked = "Indtast venligst både navn og password.";
+  if (email.isEmpty() || password.isEmpty()) {
+    besked = "Indtast venligst både email og password.";
     return;
   }
   
   Bruger fundetBruger = null;
   for (Bruger bruger : brugere) {
-    if (bruger.getNavn().equalsIgnoreCase(navn)) {
+    if (bruger.getEmail().equalsIgnoreCase(email)) {
       fundetBruger = bruger;
       break;
     }
@@ -271,15 +308,16 @@ void loginBruger() {
   
   if (hashedInputPassword.equals(fundetBruger.getHashedPassword())) {
     besked = "Login succesfuld! Velkommen, " + fundetBruger.getNavn() + ".";
-    println("Bruger " + fundetBruger.getNavn() + " loggede ind succesfuldt.");
+    println("Bruger " + fundetBruger.getEmail() + " loggede ind succesfuldt.");
   } else {
     besked = "Forkert password.";
-    println("Mislykket loginforsøg for bruger " + fundetBruger.getNavn() + ".");
+    println("Mislykket loginforsøg for bruger " + fundetBruger.getEmail() + ".");
   }
   
-  kontrolP5.get(Textfield.class, "LoginNavn").clear();
+  kontrolP5.get(Textfield.class, "LoginEmail").clear();
   kontrolP5.get(Textfield.class, "LoginPassword").clear();
 }
+
 
 String bytesTilHex(byte[] bytes) {
   StringBuilder hexString = new StringBuilder();
@@ -308,17 +346,17 @@ class Bruger {
   private int id;
   private LocalDate dato;
   private int alder;
-  private ArrayList<String> præferancer = new ArrayList<String>();
+  private String email;
   
   private String hashedPassword;
   private byte[] salt;
   
-  Bruger(String navn, int id, String password, LocalDate dato, int alder, ArrayList<String> præferancer){
+  Bruger(String navn, int id, String password, LocalDate dato, int alder, String email){
     this.navn = navn;
     this.id = id;
     this.dato = dato;
     this.alder = alder;
-    this.præferancer = præferancer;
+    this.email = email;
     
     this.salt = genererSalt();
     this.hashedPassword = hashPassword(password, this.salt);
@@ -336,8 +374,8 @@ class Bruger {
   int getAlder(){
     return alder;
   }
-  ArrayList<String> getPræferancer(){
-    return præferancer;
+  String getEmail(){
+    return email;
   }
   String getHashedPassword(){
     return hashedPassword;
