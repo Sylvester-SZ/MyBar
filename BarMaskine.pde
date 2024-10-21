@@ -9,8 +9,8 @@ void drive(String pumpNums, String durationNums) {
     String pumps[] = split(pumpNums, '-');
     String durations[] = split(durationNums, '-');
     String request = prefix+ip+suffix;
-    for (String i : pumps) {
-      request = request+spacer+"M"+pumps[int(i)]+"="+durations[int(i)];
+    for (int i=0;i<pumps.length;i++) {
+      request = request+spacer+"M"+pumps[i]+"="+durations[i];
     }
     println(request);
 
@@ -19,5 +19,3 @@ void drive(String pumpNums, String durationNums) {
     println("Not connected");
   }
 }
-
-//drive("0-1", "2-4");
