@@ -18,7 +18,7 @@ Button registrerKlarKnappen;
 
 Textfield loginNavnFelt, loginPasswordFelt;
 Button loginKnappen;
-Button skiftTilRegistrerKnappen;
+Button skiftTilRegistrerKnappen, skiftTilLoginKnappen;
 
 String besked = "";
 
@@ -60,7 +60,7 @@ void draw() {
   text(besked, width/2, height - 40);
 }
 
-void setupRegistrerUI() {
+void setupRegistrerUI() { 
   registrerNavnFelt = kontrolP5.addTextfield("RegistrerNavn")
     .setPosition(width/2-width/12, height/20*8)
     .setSize(width/6,height/30)
@@ -81,6 +81,7 @@ void setupRegistrerUI() {
     .setPasswordMode(true)
     .setLabel("Password")
     .setFont(font)
+    .setColorActive(baggrundsFarve2)
     .setColorForeground(baggrundsFarve2)
     .setColorBackground(baggrundsFarve2);
 
@@ -93,6 +94,7 @@ void setupRegistrerUI() {
     .setInputFilter(ControlP5.INTEGER)
     .setLabel("Alder")
     .setFont(font)
+    .setColorActive(baggrundsFarve2)
     .setColorForeground(baggrundsFarve2)
     .setColorBackground(baggrundsFarve2);
 
@@ -104,6 +106,7 @@ void setupRegistrerUI() {
     .setSize(width/6,height/30)
     .setLabel("Email")
     .setFont(font)
+    .setColorActive(baggrundsFarve2)
     .setColorForeground(baggrundsFarve2)
     .setColorBackground(baggrundsFarve2);
 
@@ -111,8 +114,8 @@ void setupRegistrerUI() {
     .setPadding(width/200, -height/18);
 
   registrerKlarKnappen = kontrolP5.addButton("RegistrerKlar")
-    .setPosition(width/2-width/40, height/20*16)
-    .setSize(width/20,height/30)
+    .setPosition(width/2-width/30, height/20*16)
+    .setSize(width/15,height/30)
     .setLabel("Registrer")
     .setFont(font)
     .setColorBackground(knapFarve)
@@ -120,6 +123,19 @@ void setupRegistrerUI() {
     .onClick(new CallbackListener() {
       public void controlEvent(CallbackEvent event) {
         registrerBruger();
+      }
+    });
+    
+  skiftTilLoginKnappen = kontrolP5.addButton("SkiftTilLogin")
+    .setPosition(width/2-width/30, height/20*18)
+    .setSize(width/15,height/30)
+    .setLabel("Login")
+    .setFont(font)
+    .setColorBackground(knapFarve)
+    .setColorForeground(knapFarve)
+    .onClick(new CallbackListener() {
+      public void controlEvent(CallbackEvent event) {
+        skiftTilLogin();
       }
     });
 }
@@ -134,33 +150,37 @@ void setupLoginUI() {
   circle(width/2, height/20*4-width/60,width/30);
   
   loginNavnFelt = kontrolP5.addTextfield("LoginEmail")
-    .setPosition(width/2-150, height/20*10)
-    .setSize(300, 30)
+    .setPosition(width/2-width/12, height/20*8)
+    .setSize(width/6,height/30)
     .setAutoClear(false)
     .setLabel("Email")
     .setFont(font)
-    .hide()
-    .setColorBackground(baggrundsFarve2);
+    .setColorActive(baggrundsFarve2)
+    .setColorBackground(baggrundsFarve2)
+    .setColorForeground(baggrundsFarve2)
+    .hide();
 
   loginNavnFelt.getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE)
-    .setPadding(5, -50);
+    .setPadding(width/200, -height/18);
   
 
   loginPasswordFelt = kontrolP5.addTextfield("LoginPassword")
-    .setPosition(width/2-150, height/20*12)
-    .setSize(300, 30)
+    .setPosition(width/2-width/12, height/20*10)
+    .setSize(width/6,height/30)
     .setPasswordMode(true)
     .setLabel("Password")
     .setFont(font)
-    .hide()
-    .setColorBackground(baggrundsFarve2);
+    .setColorActive(baggrundsFarve2)
+    .setColorBackground(baggrundsFarve2)
+    .setColorForeground(baggrundsFarve2)
+    .hide();
 
   loginPasswordFelt.getCaptionLabel().align(ControlP5.LEFT, ControlP5.BOTTOM_OUTSIDE)
-    .setPadding(5, -50);
+    .setPadding(width/200, -height/18);
 
   loginKnappen = kontrolP5.addButton("LoginKnappen")
-    .setPosition(width/2, height/20*14)
-    .setSize(100, 40)
+    .setPosition(width/2-width/30, height/20*12)
+    .setSize(width/15,height/30)
     .setLabel("Login")
     .setFont(font)
     .setColorBackground(knapFarve)
@@ -173,8 +193,8 @@ void setupLoginUI() {
     .hide();
 
   skiftTilRegistrerKnappen = kontrolP5.addButton("SkiftTilRegistrer")
-    .setPosition(width/2, height/20*16)
-    .setSize(100, 30)
+    .setPosition(width/2-width/30, height/20*14)
+    .setSize(width/15,height/30)
     .setLabel("Registrer")
     .setFont(font)
     .setColorBackground(knapFarve)
@@ -255,11 +275,18 @@ void skiftTilLogin() {
   kontrolP5.get(Textfield.class, "RegistrerAlder").hide();
   kontrolP5.get(Textfield.class, "RegistrerEmail").hide();
   kontrolP5.get(Button.class, "RegistrerKlar").hide();
+  kontrolP5.get(Button.class, "SkiftTilLogin").hide();
   
   kontrolP5.get(Textfield.class, "LoginEmail").show();
   kontrolP5.get(Textfield.class, "LoginPassword").show();
   kontrolP5.get(Button.class, "LoginKnappen").show();
   kontrolP5.get(Button.class, "SkiftTilRegistrer").show();
+  fill(255);
+  noStroke();
+  circle(width/2, height/20*4,width/10);
+  fill(baggrundsFarve);
+  circle(width/2, height/20*4+width/22,width/12);
+  circle(width/2, height/20*4-width/60,width/30);
 }
 
 void skiftTilRegistrer() {
@@ -271,11 +298,18 @@ void skiftTilRegistrer() {
   kontrolP5.get(Textfield.class, "RegistrerAlder").show();
   kontrolP5.get(Textfield.class, "RegistrerEmail").show();
   kontrolP5.get(Button.class, "RegistrerKlar").show();
+  kontrolP5.get(Button.class, "SkiftTilLogin").show();
   
   kontrolP5.get(Textfield.class, "LoginEmail").hide();
   kontrolP5.get(Textfield.class, "LoginPassword").hide();
   kontrolP5.get(Button.class, "LoginKnappen").hide();
   kontrolP5.get(Button.class, "SkiftTilRegistrer").hide();
+  fill(255);
+  noStroke();
+  circle(width/2, height/20*4,width/10);
+  fill(baggrundsFarve);
+  circle(width/2, height/20*4+width/22,width/12);
+  circle(width/2, height/20*4-width/60,width/30);
   
   besked = "";
 }
