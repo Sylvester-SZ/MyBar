@@ -78,7 +78,8 @@ void setupRegistrerUI() {
     .setLabel("Registrer")
     .setFont(font)
     .setColorBackground(knapFarve)
-    .setColorForeground(knapFarve)
+    .setColorForeground(knapHoverFarve)
+    .setColorActive(knapFarve)
     .onClick(new CallbackListener() {
     public void controlEvent(CallbackEvent event) {
       registrerBruger();
@@ -92,7 +93,8 @@ void setupRegistrerUI() {
     .setLabel("Login")
     .setFont(font)
     .setColorBackground(knapFarve)
-    .setColorForeground(knapFarve)
+    .setColorForeground(knapHoverFarve)
+    .setColorActive(knapFarve)
     .onClick(new CallbackListener() {
     public void controlEvent(CallbackEvent event) {
       skiftTilLogin();
@@ -145,7 +147,8 @@ void setupLoginUI() {
     .setLabel("Login")
     .setFont(font)
     .setColorBackground(knapFarve)
-    .setColorForeground(knapFarve)
+    .setColorForeground(knapHoverFarve)
+    .setColorActive(knapFarve)
     .onClick(new CallbackListener() {
     public void controlEvent(CallbackEvent event) {
       loginBruger();
@@ -160,7 +163,8 @@ void setupLoginUI() {
     .setLabel("Registrer")
     .setFont(font)
     .setColorBackground(knapFarve)
-    .setColorForeground(knapFarve)
+    .setColorForeground(knapHoverFarve)
+    .setColorActive(knapFarve)
     .onClick(new CallbackListener() {
     public void controlEvent(CallbackEvent event) {
       skiftTilRegistrer();
