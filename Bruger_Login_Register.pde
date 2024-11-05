@@ -17,6 +17,8 @@ String besked = "";
 
 int brugerIdTæller = 0;
 
+float timer = 10000;
+float timedPoint = 0;
 
 
 void setupRegistrerUI() {
@@ -185,6 +187,8 @@ void registrerBruger() {
 
   if (navn.isEmpty() || password.isEmpty() || alderTekst.isEmpty() || emailTekst.isEmpty()) {
     besked = "Udfyld venligst alle obligatoriske felter.";
+    timedPoint = millis();
+    timer = 0;
     return;
   }
 
@@ -193,17 +197,23 @@ void registrerBruger() {
     alder = Integer.parseInt(alderTekst);
     if (alder <= 0) {
       besked = "Alder skal være et positivt heltal.";
+      timedPoint = millis();
+      timer = 0;
       return;
     }
   }
   catch (NumberFormatException e) {
     besked = "Alder skal være et heltal.";
+    timedPoint = millis();
+    timer = 0;
     return;
   }
 
   for (Bruger bruger : brugere) {
     if (bruger.getNavn().equalsIgnoreCase(navn)) {
       besked = "Bruger med dette navn eksisterer allerede.";
+      timedPoint = millis();
+      timer = 0;
       return;
     }
   }
@@ -232,6 +242,8 @@ void registrerBruger() {
   skiftTilLogin();
 
   besked = "Registrering succesfuld! Log ind venligst.";
+  timedPoint = millis();
+  timer = 0;
 }
 
 void skiftTilLogin() {
@@ -290,6 +302,8 @@ void loginBruger() {
 
   if (email.isEmpty() || password.isEmpty()) {
     besked = "Indtast venligst både email og password.";
+    timedPoint = millis();
+    timer = 0;
     return;
   }
 
@@ -297,13 +311,14 @@ void loginBruger() {
   for (Bruger bruger : brugere) {
     if (bruger.getEmail().equalsIgnoreCase(email)) {
       fundetBruger = bruger;
-      skærm = "hovedSkærm";
       break;
     }
   }
 
   if (fundetBruger == null) {
     besked = "Bruger ikke fundet.";
+    timedPoint = millis();
+    timer = 0;
     return;
   }
 
@@ -311,9 +326,12 @@ void loginBruger() {
 
   if (hashedInputPassword.equals(fundetBruger.getHashedPassword())) {
     besked = "Login succesfuld! Velkommen, " + fundetBruger.getNavn() + ".";
+    skærm = "hovedSkærm";
     println("Bruger " + fundetBruger.getEmail() + " loggede ind succesfuldt.");
   } else {
     besked = "Forkert password.";
+    timedPoint = millis();
+    timer = 0;
     println("Mislykket loginforsøg for bruger " + fundetBruger.getEmail() + ".");
   }
 

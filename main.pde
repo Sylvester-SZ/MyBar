@@ -12,7 +12,11 @@ PFont font;
 
 String skærm = "registrer";
 
+float tilbageKnapX = 0;
+
 ControlP5 kontrolP5;
+
+Button tilbageKnap;
 
 
 void setup(){
@@ -23,22 +27,67 @@ void setup(){
   setupLoginUI();
   drive("1-5","2-4");
   //drive("1-2","2-4");
-  flaskerKnap = addKnap(width/10*7-width/8, height/2-height/20, width/4, height/10, "FLASKER", font);
-  drinksKnap = addKnap(width/10*3-width/8, height/2-height/20, width/4, height/10, "Drinks", font);
+  flaskerKnap = addKnap(width/10*7-width/8, height/2-height/20, width/4, height/10, "FLASKER", font).onClick(new CallbackListener() {
+    public void controlEvent(CallbackEvent event) {
+      skærm = "flasker";
+    }
+  });
+  
+  drinksKnap = addKnap(width/10*3-width/8, height/2-height/20, width/4, height/10, "Drinks", font).onClick(new CallbackListener() {
+    public void controlEvent(CallbackEvent event) {
+      skærm = "drinks";
+    }
+  });
+  
+  tilbageKnap = addKnap(width/20, height/20+height, width/10, height/20, "Tilbage", font).onClick(new CallbackListener() {
+    public void controlEvent(CallbackEvent event) {
+      skærm = "registrer";
+    }
+  });
 }
 
 void draw() {
-  
+  background(baggrundsFarve);
+  timer = millis()-timedPoint;
+  println(timer);
   if(skærm.equals("registrer")){
     camY = lerp(camY, 0, 0.1);
+    camX = lerp(camX, 0, 0.1);
   }
   
   if(skærm.equals("hovedSkærm")){
     camY = lerp(camY, height, 0.1);
+    camX = lerp(camX, 0, 0.1);
+    tilbageKnapX = lerp(tilbageKnapX, 0, 0.08);
+    tilbageKnap.onClick(new CallbackListener() {
+      public void controlEvent(CallbackEvent event) {
+        skærm = "registrer";
+      }
+    });
+  }
+  else{
+    tilbageKnap.onClick(new CallbackListener() {
+      public void controlEvent(CallbackEvent event) {
+        skærm = "hovedSkærm";
+      }
+    });
   }
   
+  if(skærm.equals("flasker")){
+    camX = lerp(camX, width, 0.1);
+    camY = lerp(camY, height, 0.1);
+    tilbageKnapX = lerp(tilbageKnapX, width, 0.08);
+  }
   
-  background(baggrundsFarve);
+  if(skærm.equals("drinks")){
+    camX = lerp(camX, -width, 0.1);
+    camY = lerp(camY, height, 0.1);
+    tilbageKnapX = lerp(tilbageKnapX, -width, 0.08);
+  }
+  if(camY < 1){
+    tilbageKnapX = 0;
+  }
+  tilbageKnap.setPosition(width/20+tilbageKnapX-camX, height/20-camY+height);
   
   flaskerKnap.setPosition(width/10*7-width/8-camX, height/2-height/20-camY+height);
   drinksKnap.setPosition(width/10*3-width/8-camX, height/2-height/20-camY+height);
@@ -73,10 +122,11 @@ void draw() {
     fill(255);
     text("Login", width/2-camX, 30-camY);
   }
-  
-  textSize(16);
-  fill(255, 0, 0);
-  text(besked, width/2-camX, height - 40-camY);
+  if(timer < 2000){
+      textSize(16);
+      fill(255, 0, 0);
+      text(besked, width/2-camX, height - 40-camY);
+    }
 }
 
 Button addKnap(float x, float y, int sX, int sY, String text, PFont font){
